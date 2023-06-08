@@ -9,6 +9,26 @@ function App() {
 
   const [chatbotExamplesList, setChatbotExamplesList] = useState<InputOutputTextPair[]>([]);
 
+  const handleCreateExampleQuestion = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const newExample: InputOutputTextPair = {
+      inputText: chatbotQuestion,
+      outputText: chatbotResponse
+    }
+    setChatbotExamplesList([...chatbotExamplesList, newExample]);
+    setChatbotQuestion('');
+    setChatbotResponse(''); 
+  }
+  const handleCreateChatBot = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const chatbotCollectionRef = collection(db, "Test");
+    const chatbotDoc = await addDoc(chatbotCollectionRef, {
+      name: chatbotName,
+      context: chatbotContext,
+      examples: chatbotExamplesList
+    });
+    console.log("Document written with ID: ", chatbotDoc.id);
+  }
   return (
     <>
       <header>
