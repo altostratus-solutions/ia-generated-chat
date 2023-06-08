@@ -1,6 +1,13 @@
-import './App.css'
-
+import { useState } from 'react';
+import { InputOutputTextPair } from './models';
 function App() {
+  const [chatbotName, setChatbotName] = useState<string>('');
+  const [chatbotContext, setChatbotContext] = useState<string>('');
+  
+  const [chatbotQuestion, setChatbotQuestion] = useState<string>('');
+  const [chatbotResponse, setChatbotResponse] = useState<string>('');
+
+  const [chatbotExamplesList, setChatbotExamplesList] = useState<InputOutputTextPair[]>([]);
 
   return (
     <>
