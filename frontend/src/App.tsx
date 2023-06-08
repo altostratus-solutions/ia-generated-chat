@@ -25,12 +25,15 @@ function App() {
   const handleCreateChatBot = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const chatbotCollectionRef = collection(db, "Test");
-    const chatbotDoc = await addDoc(chatbotCollectionRef, {
-      name: chatbotName,
-      context: chatbotContext,
-      examples: chatbotExamplesList
+    await addDoc(chatbotCollectionRef, {
+      chatbotName:chatbotName,
+      modelContext: chatbotContext,
+      modelExamples: chatbotExamplesList
     });
-    console.log("Document written with ID: ", chatbotDoc.id);
+    setChatbotExamplesList([]);
+    setChatbotName('');
+    setChatbotContext('');
+    
   }
   return (
     <>
