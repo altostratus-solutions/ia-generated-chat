@@ -1,4 +1,4 @@
-.examples-container{
+.examples-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -12,17 +12,59 @@
   box-sizing: border-box;
   margin-top: 50px;
   margin-bottom: 50px;
-
 }
-.loaded-examples-container{
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+.examples-inputs-container {
+  align-self: self-start;
+}
+.loaded-examples-container {
+  display: grid;
   justify-content: space-between;
   align-items: center;
   align-content: center;
-  margin: 0 auto;
+}
+.loaded-examples-container h3 {
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+.examples-list {
+  padding: 0;
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+.example {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  padding: 20px;
+  margin-bottom: inherit;
+  position: relative;
+  float: left;
+  position: relative;
+}
 
+.example-text {
+  margin: 5px;
+}
 
-
+.delete-button {
+  outline: none;
+  color: red;
+  width: 10px;
+  height: 10px;
+  transition: 0.2s;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  margin: 5px 5px 0 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.delete-button:hover {
+  background-color: transparent;
 }
