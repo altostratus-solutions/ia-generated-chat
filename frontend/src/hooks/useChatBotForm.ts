@@ -57,7 +57,7 @@ function chatBotFormReducer(state: chatBotFormState, action: Action<ACTIONS>) {
     case ACTIONS.ADD_MODEL_EXAMPLE: {
       return {
         ...state,
-        modelExamples: [...state.modelExamples, state.currentExample],
+        modelExamples: [state.currentExample, ...state.modelExamples],
         currentExample: initialState.currentExample,
       };
     }
