@@ -1,6 +1,7 @@
 export type InputOutputTextPair ={
   inputText: string;
   outputText: string;
+  id: string;
 }
 
 export type ChatBotDoc = {
