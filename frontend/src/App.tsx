@@ -1,63 +1,60 @@
-import './styles/App.css';
-import {db} from './firestore';
-import { addDoc, collection} from "firebase/firestore";
-import { useState } from 'react';
-import { InputOutputTextPair } from './models';
+import "./styles/App.css";
+import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
 function App() {
-  const [chatbotName, setChatbotName] = useState<string>('');
-  const [chatbotContext, setChatbotContext] = useState<string>('');
-  
-  const [chatbotQuestion, setChatbotQuestion] = useState<string>('');
-  const [chatbotResponse, setChatbotResponse] = useState<string>('');
-
-  const [chatbotExamplesList, setChatbotExamplesList] = useState<InputOutputTextPair[]>([]);
-
-  const handleCreateExampleQuestion = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const newExample: InputOutputTextPair = {
-      inputText: chatbotQuestion,
-      outputText: chatbotResponse
-    }
-    setChatbotExamplesList([...chatbotExamplesList, newExample]);
-    setChatbotQuestion('');
-    setChatbotResponse(''); 
-  }
-  const handleCreateChatBot = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const chatbotCollectionRef = collection(db, "Test");
-    await addDoc(chatbotCollectionRef, {
-      chatbotName:chatbotName,
-      modelContext: chatbotContext,
-      modelExamples: chatbotExamplesList
-    });
-    setChatbotExamplesList([]);
-    setChatbotName('');
-    setChatbotContext('');
-    
-  }
+  const {
+    state: { chatbotName, modelContext, modelExamples, currentExample },
+    dispatch,
+    handleCreateChatBot,
+    handleCreateExampleQuestion,
+  } = useChatBotForm();
   return (
     <>
       <header>
         <h1>Customize your chatbot</h1>
       </header>
-        <section>
-          <form className="form" onSubmit={handleCreateChatBot}>
-            <label htmlFor="chatbotName">Chatbot Name</label>
-            <input value={chatbotName} onChange={(e)=> setChatbotName(e.target.value)} type="text" name="chatbotName" id="chatbotName" />
+      <section>
+        <form className="form" onSubmit={handleCreateChatBot}>
+          <label htmlFor="chatbotName">Chatbot Name</label>
+          <input
+            value={chatbotName}
+            onChange={(e) =>
+              dispatch({
+                type: ACTIONS.SET_CHATBOT_NAME,
+                payload: e.target.value,
+              })
+            }
+            type="text"
+            name="chatbotName"
+            id="chatbotName"
+          />
 
-            <label htmlFor="chatbotContext">Chatbot Context</label>
-            <textarea value={chatbotContext} onChange={(e)=> setChatbotContext(e.target.value)} name="chatbotContext" id="chatbotContext" />
-            <h2>Example Q&A's</h2>
-            <article className="examples-container">
-              <div className="examples-inputs-container">
-
+          <label htmlFor="chatbotContext">Chatbot Context</label>
+          <textarea
+            value={modelContext}
+            onChange={(e) =>
+              dispatch({
+                type: ACTIONS.SET_MODEL_CONTEXT,
+                payload: e.target.value,
+              })
+            }
+            name="chatbotContext"
+            id="chatbotContext"
+          />
+          <h2>Example Q&A's</h2>
+          <article className="examples-container">
+            <div className="examples-inputs-container">
               <label htmlFor="chatbotExamplesQuestion">Question:</label>
               <input
                 type="text"
                 name="chatbotExamplesQuestion"
                 id="chatbotExamples"
-                value={chatbotQuestion}
-                onChange={(e)=> setChatbotQuestion(e.target.value)}
+                value={currentExample.inputText}
+                onChange={(e) =>
+                  dispatch({
+                    type: ACTIONS.SET_CURRENT_EXAMPLE_QUESTION,
+                    payload: e.target.value,
+                  })
+                }
               />
 
               <label htmlFor="chatbotExamplesAnswer">Answer:</label>
@@ -65,30 +62,35 @@ function App() {
                 type="text"
                 name="chatbotExamplesAnswer"
                 id="chatbotResponse"
-                value={chatbotResponse}
-                onChange={(e)=> setChatbotResponse(e.target.value)}
+                value={currentExample.outputText}
+                onChange={(e) =>
+                  dispatch({
+                    type: ACTIONS.SET_CURRENT_EXAMPLE_ANSWER,
+                    payload: e.target.value,
+                  })
+                }
               />
-              <button onClick={handleCreateExampleQuestion}>Load Example</button>
-              </div>
-              <div className="loaded-examples-container">
-                <h3>Loaded Examples</h3>
-                <ul>
-                  {chatbotExamplesList.map((example, index) => {
-                    return (
-                      <li key={index}>
-                        <p>{example.inputText}</p>
-                        <p>{example.outputText}</p>
-                      </li>
-                    )
-                  }
-                  )}
-                </ul>
-              </div>
-
-            </article>
-            <button type="submit">Create ChatBot!</button>
-          </form>
-        </section>
+              <button onClick={handleCreateExampleQuestion}>
+                Load Example
+              </button>
+            </div>
+            <div className="loaded-examples-container">
+              <h3>Loaded Examples</h3>
+              <ul>
+                {modelExamples.map((example, index) => {
+                  return (
+                    <li key={index}>
+                      <p>{example.inputText}</p>
+                      <p>{example.outputText}</p>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </article>
+          <button type="submit">Create ChatBot!</button>
+        </form>
+      </section>
     </>
   );
 }
