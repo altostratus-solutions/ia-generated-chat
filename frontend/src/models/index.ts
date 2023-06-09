@@ -6,6 +6,13 @@ export type InputOutputTextPair ={
 export type ChatBotDoc = {
   id: string;
   chatbotName: string;
-  modelContent: string;
+  modelContext: string;
   modelExamples: InputOutputTextPair[];
 }
+
+export type chatBotFormState = {
+  chatbotName: string;
+  modelContext: string;
+  modelExamples: InputOutputTextPair[];
+  currentExample: InputOutputTextPair;
+};
