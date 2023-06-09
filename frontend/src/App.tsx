@@ -26,6 +26,7 @@ function App() {
             type="text"
             name="chatbotName"
             id="chatbotName"
+            placeholder="My awesome chatbot..."
           />
 
           <label htmlFor="chatbotContext">Chatbot Context</label>
@@ -39,6 +40,7 @@ function App() {
             }
             name="chatbotContext"
             id="chatbotContext"
+            placeholder="Pretend you are an astronaut..."
           />
           <h2>Example Q&A's</h2>
           <article className="examples-container">
@@ -49,6 +51,7 @@ function App() {
                 name="chatbotExamplesQuestion"
                 id="chatbotExamples"
                 value={currentExample.inputText}
+                placeholder="What is your name?"
                 onChange={(e) =>
                   dispatch({
                     type: ACTIONS.SET_CURRENT_EXAMPLE_QUESTION,
@@ -63,6 +66,7 @@ function App() {
                 name="chatbotExamplesAnswer"
                 id="chatbotResponse"
                 value={currentExample.outputText}
+                placeholder="My name is..."
                 onChange={(e) =>
                   dispatch({
                     type: ACTIONS.SET_CURRENT_EXAMPLE_ANSWER,
