@@ -3,8 +3,7 @@ from typing_extensions import Annotated
 from services import get_settings, predict_large_language_model_sample
 import logging
 import config
-
-
+from data.firestore import db
 app = FastAPI()
 
 
@@ -33,3 +32,9 @@ async def read_root(req: Request, settings: Annotated[config.Settings, Depends(g
     return {
         "text":  CHAT.send_message(request_json['message']['text'], **PARAMETERS) .text
     }
+
+@app.get("/")
+async def get_chatbots():
+    chatbots_ref = db.collection(u'Test')
+    docs = chatbots_ref.stream()
+    return [doc.to_dict() for doc in docs]
