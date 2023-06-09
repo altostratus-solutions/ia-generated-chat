@@ -6,6 +6,7 @@ function App() {
     dispatch,
     handleCreateChatBot,
     handleCreateExampleQuestion,
+    handleDeleteExample
   } = useChatBotForm();
   return (
     <>
@@ -79,14 +80,16 @@ function App() {
               </button>
             </div>
             <div className="loaded-examples-container">
-              <h3>Loaded Examples</h3>
-              <ul>
-                {modelExamples.map((example, index) => {
+              <ul className="examples-list">
+                <h3>Loaded Examples</h3>
+                {modelExamples.map((example) => {
                   return (
-                    <li key={index}>
-                      <p>{example.inputText}</p>
-                      <p>{example.outputText}</p>
+                    <li className="example" key={example.id}>
+                       <button onClick={()=> handleDeleteExample(example.id)} className="delete-button">&times;</button>
+                       <p className="example-text">Q: {example.inputText}</p>
+                       <p className="example-text">A: {example.outputText}</p>
                     </li>
+
                   );
                 })}
               </ul>
