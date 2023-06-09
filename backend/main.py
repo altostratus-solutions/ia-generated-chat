@@ -15,6 +15,11 @@ PARAMETERS = {
     "top_k": 40,
 }
 
+METADATA = {
+    "project_id": "ia-generated-chat-demo",
+    "model_name": "chat-bison@001",
+    "location": "us-central1",
+}
 
 @app.post("/")
 async def read_root(req: Request, settings: Annotated[config.Settings, Depends(get_settings)]):
@@ -22,7 +27,7 @@ async def read_root(req: Request, settings: Annotated[config.Settings, Depends(g
     request_json = await req.json()
     logging.info(request_json)
 
-    CHAT = predict_large_language_model_sample("ia-generated-chat-demo", "chat-bison@001", 0.2, 256, 0.8, 40, location="us-central1", context=settings.model_context, examples=settings.model_examples_json
+    CHAT = predict_large_language_model_sample(**PARAMETERS,**METADATA, context=settings.model_context, examples=settings.model_examples_json
                                                )
 
     return {
