@@ -6,6 +6,7 @@ function App() {
     dispatch,
     handleCreateChatBot,
     handleCreateExampleQuestion,
+    handleDeleteExample
   } = useChatBotForm();
   return (
     <>
@@ -26,6 +27,7 @@ function App() {
             type="text"
             name="chatbotName"
             id="chatbotName"
+            placeholder="My awesome chatbot..."
           />
 
           <label htmlFor="chatbotContext">Chatbot Context</label>
@@ -39,6 +41,7 @@ function App() {
             }
             name="chatbotContext"
             id="chatbotContext"
+            placeholder="Pretend you are an astronaut..."
           />
           <h2>Example Q&A's</h2>
           <article className="examples-container">
@@ -49,6 +52,7 @@ function App() {
                 name="chatbotExamplesQuestion"
                 id="chatbotExamples"
                 value={currentExample.inputText}
+                placeholder="What is your name?"
                 onChange={(e) =>
                   dispatch({
                     type: ACTIONS.SET_CURRENT_EXAMPLE_QUESTION,
@@ -63,6 +67,7 @@ function App() {
                 name="chatbotExamplesAnswer"
                 id="chatbotResponse"
                 value={currentExample.outputText}
+                placeholder="My name is..."
                 onChange={(e) =>
                   dispatch({
                     type: ACTIONS.SET_CURRENT_EXAMPLE_ANSWER,
@@ -75,14 +80,16 @@ function App() {
               </button>
             </div>
             <div className="loaded-examples-container">
-              <h3>Loaded Examples</h3>
-              <ul>
-                {modelExamples.map((example, index) => {
+              <ul className="examples-list">
+                <h3>Loaded Examples</h3>
+                {modelExamples.map((example) => {
                   return (
-                    <li key={index}>
-                      <p>{example.inputText}</p>
-                      <p>{example.outputText}</p>
+                    <li className="example" key={example.id}>
+                       <button onClick={()=> handleDeleteExample(example.id)} className="delete-button">&times;</button>
+                       <p className="example-text">Q: {example.inputText}</p>
+                       <p className="example-text">A: {example.outputText}</p>
                     </li>
+
                   );
                 })}
               </ul>
