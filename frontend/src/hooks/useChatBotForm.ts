@@ -74,57 +74,68 @@ function chatBotFormReducer(state: chatBotFormState, action: Action<ACTIONS>) {
 
 function useChatBotForm() {
   const [state, dispatch] = useReducer(chatBotFormReducer, initialState);
-  
+
   const handleCreateExampleQuestion = (
     e: React.MouseEvent<HTMLButtonElement>
-    ) => {
-      e.preventDefault();
-      dispatch({
-        type: ACTIONS.ADD_MODEL_EXAMPLE,
-      });
-    };
-    const handleCreateChatBot = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const chatbotCollectionRef = collection(db, CHATBOT_COLLECTION);
-      await addDoc(chatbotCollectionRef, {
-        chatbotName: state.chatbotName,
-        modelContext: state.modelContext,
-        modelExamples: state.modelExamples,
-      });
-      dispatch({
-        type: ACTIONS.SEND_FORM,
-      });
-    };
-    
-    return {
-      state,
-      dispatch,
-      handleCreateExampleQuestion,
-      handleCreateChatBot,
-    };
-  }
-  
-  export default useChatBotForm;
-  
-  type ActionsWithoutPayload = ACTIONS.ADD_MODEL_EXAMPLE | ACTIONS.SEND_FORM;
-  
-  interface ActionWithoutPayload {
-    type: ActionsWithoutPayload;
-  }
-  interface ActionsPayloads {
-    [ACTIONS.SET_CURRENT_EXAMPLE_ANSWER]: string;
-    [ACTIONS.SET_CURRENT_EXAMPLE_QUESTION]: string;
-    [ACTIONS.SET_CHATBOT_NAME]: string;
-    [ACTIONS.SET_MODEL_CONTEXT]: string;
-    [ACTIONS.ADD_MODEL_EXAMPLE]: never;
-    [ACTIONS.SEND_FORM]: never;
-  }
-  
-  interface ActionWithPayload<T extends ACTIONS> {
-    type: T;
-    payload: ActionsPayloads[T];
-  }
-  
-  type Action<T extends ACTIONS> = T extends ActionsWithoutPayload
-    ? ActionWithoutPayload
-    : ActionWithPayload<T>;
+  ) => {
+    e.preventDefault();
+    if (
+      state.currentExample.inputText === "" ||
+      state.currentExample.outputText === ""
+    )
+      return;
+    dispatch({
+      type: ACTIONS.ADD_MODEL_EXAMPLE,
+    });
+  };
+  const handleCreateChatBot = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const chatbotCollectionRef = collection(db, CHATBOT_COLLECTION);
+    if (
+      state.chatbotName === "" ||
+      state.modelContext === "" ||
+      state.modelExamples.length === 0
+    )
+      return;
+    await addDoc(chatbotCollectionRef, {
+      chatbotName: state.chatbotName,
+      modelContext: state.modelContext,
+      modelExamples: state.modelExamples,
+    });
+    dispatch({
+      type: ACTIONS.SEND_FORM,
+    });
+  };
+
+  return {
+    state,
+    dispatch,
+    handleCreateExampleQuestion,
+    handleCreateChatBot,
+  };
+}
+
+export default useChatBotForm;
+
+type ActionsWithoutPayload = ACTIONS.ADD_MODEL_EXAMPLE | ACTIONS.SEND_FORM;
+
+interface ActionWithoutPayload {
+  type: ActionsWithoutPayload;
+}
+interface ActionsPayloads {
+  [ACTIONS.SET_CURRENT_EXAMPLE_ANSWER]: string;
+  [ACTIONS.SET_CURRENT_EXAMPLE_QUESTION]: string;
+  [ACTIONS.SET_CHATBOT_NAME]: string;
+  [ACTIONS.SET_MODEL_CONTEXT]: string;
+  [ACTIONS.ADD_MODEL_EXAMPLE]: never;
+  [ACTIONS.SEND_FORM]: never;
+}
+
+interface ActionWithPayload<T extends ACTIONS> {
+  type: T;
+  payload: ActionsPayloads[T];
+}
+
+type Action<T extends ACTIONS> = T extends ActionsWithoutPayload
+  ? ActionWithoutPayload
+  : ActionWithPayload<T>;
