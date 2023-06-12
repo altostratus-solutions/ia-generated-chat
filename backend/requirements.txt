@@ -1,3 +1,6 @@
-fastapi==0.96.0
+fastapi==0.96.1
+firebase_admin==6.1.0
+google_cloud_aiplatform==1.26.0
+pydantic==1.10.9
+typing_extensions==4.6.3
 uvicorn==0.22.0
-firebase-admin==6.1.0
