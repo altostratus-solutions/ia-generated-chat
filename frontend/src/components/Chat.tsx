@@ -1,6 +1,8 @@
 import { Message } from './ChatModal';
 
-const Chat = ({ messages }:{messages:Message[]}) => {
+const Chat = ({ messages }:{messages:Message[]
+}) => {
+  
   return (
     <div className="chat">
       {messages.map((message, index) => (

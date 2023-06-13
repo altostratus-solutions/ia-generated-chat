@@ -73,16 +73,20 @@ h2 {
 }
 
 .message {
-  margin-bottom: 5px;
-  padding: 8px;
-  background-color: #f2f2f2;
-  border-radius: 4px;
-  color : #000;
+  width: fit-content;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px;
+  padding-bottom: 12px;
+  position: relative;
+  color: #000;
 }
 .isBot {
-  background-color: #e2e2e2;
+  
+  text-align: left;
+  background-color: whitesmoke;
 }
 .isUser {
-  background-color: #f2f2f2;
-  align-self: flex-end;
+  margin-left: auto;
+  background-color: #dcf8c6;
 }
