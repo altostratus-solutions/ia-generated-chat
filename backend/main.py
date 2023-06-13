@@ -26,11 +26,12 @@ async def read_root(req: Request, settings: Annotated[config.Settings, Depends(g
     request_json = await req.json()
     logging.info(request_json)
 
-    CHAT = predict_large_language_model_sample(**PARAMETERS,**METADATA, context=settings.model_context, examples=settings.model_examples_json
+    CHAT = predict_large_language_model_sample(**PARAMETERS,**METADATA,
+                                        context=settings.model_context, examples=settings.model_examples_json
                                                )
 
-    return {
-        "text":  CHAT.send_message(request_json['message']['text'], **PARAMETERS) .text
+    return { 
+        "text":  CHAT.send_message(request_json['message']['text']) .text
     }
 
 @app.get("/")
@@ -38,3 +39,18 @@ async def get_chatbots():
     chatbots_ref = db.collection(u'Test')
     docs = chatbots_ref.stream()
     return [doc.to_dict() for doc in docs]
+
+
+@app.post("/model/test")
+async def test_model(req: Request):
+    request_json = await req.json()
+    logging.info(request_json)
+    
+    CHAT = predict_large_language_model_sample(**PARAMETERS,**METADATA,
+                                        context=request_json['context'], examples=request_json['examples']
+                                               )
+
+    return { 
+        "text":  CHAT.send_message(request_json['message']['text']) .text
+    }
+    

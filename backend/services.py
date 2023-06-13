@@ -10,11 +10,9 @@ def get_settings():
     return config.Settings()
 
 
-def parse_json_examples(examples: str) -> list[InputOutputTextPair] | None:
+def parse_json_examples(examples: list[object]) -> list[InputOutputTextPair] | None:
     try:
-        examples = json.loads(examples)
-        parsed_examples = [InputOutputTextPair(
-            **example) for example in examples]
+        parsed_examples = [InputOutputTextPair(example["inputText"],example["outputText"]) for example in examples]
         return parsed_examples
     except Exception as e:
         raise ValueError(f"Invalid JSON: {e}")
@@ -28,7 +26,7 @@ def predict_large_language_model_sample(
     top_p: float,
     top_k: int,
     context: str,
-    examples: str,
+    examples: list[object],
     location: str = "us-central1",
 ):
     """Predict using a Large Language Model."""
