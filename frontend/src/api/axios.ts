@@ -9,3 +9,5 @@ const axiosInstance = axios.create({
 });
 
 export default axiosInstance;
+
+export const TEST_MODEL_API_URL = '/model/test';
