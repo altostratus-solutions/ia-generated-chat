@@ -3,22 +3,23 @@ import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
 import ChatModal from "./components/ChatModal";
 import { useState } from "react";
 function App() {
+  const [isTested, setIsTested] = useState(false);
   const {
     state: { chatbotName, modelContext, modelExamples, currentExample },
     dispatch,
     handleCreateChatBot,
     handleCreateExampleQuestion,
-    handleDeleteExample
+    handleDeleteExample,
   } = useChatBotForm();
 
-  const [isOpen,SetIsOpen] = useState(false);
+  const [isOpen, SetIsOpen] = useState(false);
   return (
     <>
       <header>
         <h1>Customize your chatbot</h1>
       </header>
       <section>
-        <form className="form" onSubmit={handleCreateChatBot}>
+        <form className="form">
           <label htmlFor="chatbotName">Chatbot Name</label>
           <input
             value={chatbotName}
@@ -89,24 +90,50 @@ function App() {
                 {modelExamples.map((example) => {
                   return (
                     <li className="example" key={example.id}>
-                       <button onClick={()=> handleDeleteExample(example.id)} className="delete-button">&times;</button>
-                       <p className="example-text">Q: {example.inputText}</p>
-                       <p className="example-text">A: {example.outputText}</p>
+                      <button
+                        onClick={() => handleDeleteExample(example.id)}
+                        className="delete-button"
+                      >
+                        &times;
+                      </button>
+                      <p className="example-text">Q: {example.inputText}</p>
+                      <p className="example-text">A: {example.outputText}</p>
                     </li>
-
                   );
                 })}
               </ul>
             </div>
           </article>
-        <button className="open-modal-button" onClick={() => {SetIsOpen(prev => !prev)}}>Test your Chatbot</button>
-          <button type="submit">Create ChatBot!</button>
         </form>
+        <div className="buttons-container">
+        <button
+          className="open-modal-button"
+          onClick={() => {
+            setIsTested(true);
+            SetIsOpen((prev) => !prev);
+          }}
+        >
+          Test your Chatbot
+        </button>
+        <button
+          disabled={!isTested}
+          onClick={(e) => {
+            setIsTested(false);
+            handleCreateChatBot(e);
+          }}
+        >
+          Create ChatBot!
+        </button>
+        </div>
         <ChatModal
-        chatbotName={chatbotName}
-        modelContext={modelContext}
-        modelExamples={modelExamples}
-        isOpen={isOpen} onClose={() => {SetIsOpen(prev => !prev)}} />
+          chatbotName={chatbotName}
+          modelContext={modelContext}
+          modelExamples={modelExamples}
+          isOpen={isOpen}
+          onClose={() => {
+            SetIsOpen((prev) => !prev);
+          }}
+        />
       </section>
     </>
   );

@@ -60,7 +60,7 @@ const ChatModal = ({ isOpen, onClose,chatbotName,modelContext,modelExamples }:Ch
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button onClick={(e)=>handleSendMessage(e)}>Send</button>
+          <button onClick={handleSendMessage}>Send</button>
         </div>
       </div>
     </div>
