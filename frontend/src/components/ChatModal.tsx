@@ -1,34 +1,45 @@
 import { useState } from 'react';
 import Chat from './Chat';
 import axiosInstance from '../api/axios';
+import { InputOutputTextPair } from '../models';
 
 export type Message = {
   message: string;
   isBot: boolean;
 };
 
-const ChatModal = ({ isOpen, onClose }) => {
+type ChatModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  chatbotName: string;
+  modelContext: string;
+  modelExamples: InputOutputTextPair[];
+}
+
+type TestModelRequestBody = {
+  context: string;
+  chatbotName: string;
+  examples: InputOutputTextPair[];
+  message: {
+    text: string;
+  }
+}
+const ChatModal = ({ isOpen, onClose,chatbotName,modelContext,modelExamples }:ChatModalProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const [message, setMessage] = useState('');
   const handleSendMessage = () => {
-    // Implement your logic to send the message
     setMessage('');
     setMessages([...messages, { message, isBot: false }]);
-    const body = {
-      context: 'test',
-      examples: [
-        {
-          inputText: 'test',
-          outputText: 'test'
-        }
-      ],
+    const reqBody:TestModelRequestBody = {
+      context: modelContext,
+      chatbotName: chatbotName,
+      examples: modelExamples,
       message:{
         text: message
       }
     }
-    axiosInstance.post('/model/test', body).then((res) => {
-      console.log(res.data);
+    axiosInstance.post('/model/test', reqBody).then((res) => {
       setMessages(prev => [...prev, { message: res.data.text, isBot: true }]);
     });
   };
@@ -37,13 +48,13 @@ const ChatModal = ({ isOpen, onClose }) => {
     <div className={`modal ${isOpen ? 'open' : ''}`}>
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
-        <h2>Chat Window</h2>
+        <h2>Test your Bot</h2>
         <div className="chat-container">
-          {/* Render your chat component here */}
           <Chat messages={messages} />
         </div>
         <div className="input-container">
           <input
+          className='chat-input'
             type="text"
             placeholder="Type your message..."
             value={message}
