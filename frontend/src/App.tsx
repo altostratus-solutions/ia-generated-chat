@@ -1,5 +1,7 @@
 import "./styles/App.css";
 import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
+import ChatModal from "./components/ChatModal";
+import { useState } from "react";
 function App() {
   const {
     state: { chatbotName, modelContext, modelExamples, currentExample },
@@ -8,6 +10,8 @@ function App() {
     handleCreateExampleQuestion,
     handleDeleteExample
   } = useChatBotForm();
+
+  const [isOpen,SetIsOpen] = useState(false);
   return (
     <>
       <header>
@@ -97,6 +101,8 @@ function App() {
           </article>
           <button type="submit">Create ChatBot!</button>
         </form>
+        <button className="open-modal-button" onClick={() => {SetIsOpen(prev => !prev)}}>Test your Chatbot</button>
+        <ChatModal isOpen={isOpen} onClose={() => {SetIsOpen(prev => !prev)}} />
       </section>
     </>
   );
