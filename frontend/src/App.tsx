@@ -99,10 +99,14 @@ function App() {
               </ul>
             </div>
           </article>
+        <button className="open-modal-button" onClick={() => {SetIsOpen(prev => !prev)}}>Test your Chatbot</button>
           <button type="submit">Create ChatBot!</button>
         </form>
-        <button className="open-modal-button" onClick={() => {SetIsOpen(prev => !prev)}}>Test your Chatbot</button>
-        <ChatModal isOpen={isOpen} onClose={() => {SetIsOpen(prev => !prev)}} />
+        <ChatModal
+        chatbotName={chatbotName}
+        modelContext={modelContext}
+        modelExamples={modelExamples}
+        isOpen={isOpen} onClose={() => {SetIsOpen(prev => !prev)}} />
       </section>
     </>
   );
