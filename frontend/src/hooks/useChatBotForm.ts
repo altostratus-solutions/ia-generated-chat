@@ -98,7 +98,7 @@ function useChatBotForm() {
         type: ACTIONS.ADD_MODEL_EXAMPLE,
       });
     };
-    const handleCreateChatBot = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleCreateChatBot = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       e.preventDefault();
       const chatbotCollectionRef = collection(db, CHATBOT_COLLECTION);
       if (state.chatbotName === "" || state.modelContext === "" || state.modelExamples.length === 0) return;
