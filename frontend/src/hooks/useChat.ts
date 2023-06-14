@@ -20,6 +20,8 @@ export default function useChat({
   const [messages, setMessages] = useState<Message[]>([]);
 
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSendMessage = () => {
     setMessage("");
     setMessages([...messages, { message, isBot: false }]);
@@ -31,14 +33,20 @@ export default function useChat({
         text: message,
       },
     };
-    sendMessage(reqBody).then((res) => {
-      setMessages((prev) => [...prev, { message: res.text, isBot: true }]);
-    });
+    setIsLoading(true);
+    sendMessage(reqBody)
+      .then((res) => {
+        setMessages((prev) => [...prev, { message: res.text, isBot: true }]);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   return {
     messages,
     message,
     setMessage,
     handleSendMessage,
+    isLoading,
   };
 }
