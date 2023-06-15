@@ -1,4 +1,3 @@
-import React from 'react'
 import ChatMessages from './ChatMessages'
 import Input from '../Input/Input'
 import { Button } from '../Button/Button'
