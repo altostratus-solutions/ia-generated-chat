@@ -22,7 +22,7 @@ const ChatModal = ({
   modelContext,
   modelExamples,
 }: ChatModalProps) => {
-  const { messages, handleSendMessage, message, setMessage } = useChat({
+  const { messages, handleSendMessage, message, setMessage,isLoading } = useChat({
     chatbotName,
     modelContext,
     modelExamples,
@@ -46,7 +46,7 @@ const ChatModal = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button onClick={handleSendMessage}>Send</button>
+          <button disabled={isLoading} onClick={handleSendMessage}>Send</button>
         </div>
       </div>
     </div>
