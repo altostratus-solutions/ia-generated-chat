@@ -1,9 +1,10 @@
 import "./styles/App.css";
 import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
-import ChatModal from "./components/ChatModal";
 import { useState } from "react";
 import Input from "./components/Input/Input";
 import { Button } from "./components/Button/Button";
+import Chat from "./components/Chat/Chat";
+import Modal from "./components/Modal/Modal";
 function App() {
   const [isTested, setIsTested] = useState(false);
   const {
@@ -98,12 +99,12 @@ function App() {
                 {modelExamples.map((example) => {
                   return (
                     <li className="example" key={example.id}>
-                      <button
+                      <Button
+                        label="&times;"
                         onClick={() => handleDeleteExample(example.id)}
                         className="delete-button"
-                      >
-                        &times;
-                      </button>
+                      />
+
                       <p className="example-text">Q: {example.inputText}</p>
                       <p className="example-text">A: {example.outputText}</p>
                     </li>
@@ -133,15 +134,14 @@ function App() {
             size="large"
           />
         </div>
-        <ChatModal
-          chatbotName={chatbotName}
-          modelContext={modelContext}
-          modelExamples={modelExamples}
-          isOpen={isOpen}
-          onClose={() => {
-            SetIsOpen((prev) => !prev);
-          }}
-        />
+        <Modal isOpen={isOpen} onClose={() => SetIsOpen(false)}>
+          <h2>Test your Bot</h2>
+          <Chat
+            chatbotName={chatbotName}
+            modelContext={modelContext}
+            modelExamples={modelExamples}
+          />
+        </Modal>
       </section>
     </>
   );

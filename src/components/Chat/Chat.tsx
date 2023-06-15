@@ -1,45 +1,29 @@
-import Chat from "./Chat";
-import { InputOutputTextPair } from "../models";
-import useChat from "../hooks/useChat";
-import Input from "./Input/Input";
-import { Button } from "./Button/Button";
-
-export type Message = {
-  message: string;
-  isBot: boolean;
-};
-
-type ChatModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
+import React from 'react'
+import ChatMessages from './ChatMessages'
+import Input from '../Input/Input'
+import { Button } from '../Button/Button'
+import useChat from '../../hooks/useChat';
+import { InputOutputTextPair } from '../../models';
+type ChatProps = {
   chatbotName: string;
   modelContext: string;
   modelExamples: InputOutputTextPair[];
 };
-
-const ChatModal = ({
-  isOpen,
-  onClose,
+export default function Chat({
   chatbotName,
   modelContext,
   modelExamples,
-}: ChatModalProps) => {
+}:ChatProps) {
   const { messages, handleSendMessage, message, setMessage, isLoading } =
     useChat({
       chatbotName,
       modelContext,
       modelExamples,
     });
-
   return (
-    <div className={`modal ${isOpen ? "open" : ""}`}>
-      <div className="modal-content">
-        <span className="close" onClick={onClose}>
-          &times;
-        </span>
-        <h2>Test your Bot</h2>
-        <div className="chat-container">
-          <Chat messages={messages} />
+    <>
+    <div className="chat-container">
+          <ChatMessages messages={messages} />
         </div>
         <div className="input-container">
           <Input
@@ -57,8 +41,6 @@ const ChatModal = ({
             label="Send"
           />
         </div>
-      </div>
-    </div>
-  );
-};
-export default ChatModal;
+    </>
+  )
+}
