@@ -3,6 +3,7 @@ import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
 import ChatModal from "./components/ChatModal";
 import { useState } from "react";
 import Input from "./components/Input/Input";
+import { Button } from "./components/Button/Button";
 function App() {
   const [isTested, setIsTested] = useState(false);
   const {
@@ -22,22 +23,22 @@ function App() {
       <section>
         <form className="form">
           <Input
-          value={chatbotName}
-          className="chatbot-name-input"
-          onChange={(e) =>
-            dispatch({
-              type: ACTIONS.SET_CHATBOT_NAME,
-              payload: e.target.value,
-            })
-          }
-          type="text"
-          name="chatbotName"
-          id="chatbotName"
-          placeholder="My awesome chatbot..."
-          label="Chatbot Name"
-          showLabel={true}
+            value={chatbotName}
+            className="chatbot-name-input"
+            onChange={(e) =>
+              dispatch({
+                type: ACTIONS.SET_CHATBOT_NAME,
+                payload: e.target.value,
+              })
+            }
+            type="text"
+            name="chatbotName"
+            id="chatbotName"
+            placeholder="My awesome chatbot..."
+            label="Chatbot Name"
+            showLabel={true}
           />
-          
+
           <label htmlFor="chatbotContext">Chatbot Context</label>
           <textarea
             value={modelContext}
@@ -55,40 +56,41 @@ function App() {
           <article className="examples-container">
             <div className="examples-inputs-container">
               <Input
-               type="text"
-               name="chatbotExamplesQuestion"
-               id="chatbotExamples"
-               value={currentExample.inputText}
-               placeholder="What is your name?"
-               onChange={(e) =>
-                 dispatch({
-                   type: ACTIONS.SET_CURRENT_EXAMPLE_QUESTION,
-                   payload: e.target.value,
-                 })
-               }
+                type="text"
+                name="chatbotExamplesQuestion"
+                id="chatbotExamples"
+                value={currentExample.inputText}
+                placeholder="What is your name?"
+                onChange={(e) =>
+                  dispatch({
+                    type: ACTIONS.SET_CURRENT_EXAMPLE_QUESTION,
+                    payload: e.target.value,
+                  })
+                }
                 label="Question:"
                 showLabel={true}
-               
-               />
+              />
 
-               <Input
-                 type="text"
-                 name="chatbotExamplesAnswer"
-                 id="chatbotResponse"
-                 value={currentExample.outputText}
-                 placeholder="My name is..."
-                 onChange={(e) =>
-                   dispatch({
-                     type: ACTIONS.SET_CURRENT_EXAMPLE_ANSWER,
-                     payload: e.target.value,
-                   })
-                 }
-                  label="Answer:"
-                  showLabel={true}
-                />
-              <button onClick={handleCreateExampleQuestion}>
-                Load Example
-              </button>
+              <Input
+                type="text"
+                name="chatbotExamplesAnswer"
+                id="chatbotResponse"
+                value={currentExample.outputText}
+                placeholder="My name is..."
+                onChange={(e) =>
+                  dispatch({
+                    type: ACTIONS.SET_CURRENT_EXAMPLE_ANSWER,
+                    payload: e.target.value,
+                  })
+                }
+                label="Answer:"
+                showLabel={true}
+              />
+              <Button
+                label="Add Example"
+                onClick={handleCreateExampleQuestion}
+                size="large"
+              />
             </div>
             <div className="loaded-examples-container">
               <ul className="examples-list">
@@ -112,24 +114,24 @@ function App() {
           </article>
         </form>
         <div className="buttons-container">
-        <button
-          className="open-modal-button"
-          onClick={() => {
-            setIsTested(true);
-            SetIsOpen((prev) => !prev);
-          }}
-        >
-          Test your Chatbot
-        </button>
-        <button
-          disabled={!isTested}
-          onClick={(e) => {
-            setIsTested(false);
-            handleCreateChatBot(e);
-          }}
-        >
-          Create ChatBot!
-        </button>
+          <Button
+            className="open-modal-button"
+            label="Test your Chatbot"
+            onClick={() => {
+              setIsTested(true);
+              SetIsOpen((prev) => !prev);
+            }}
+            size="large"
+          />
+          <Button
+            disabled={!isTested}
+            onClick={(e) => {
+              setIsTested(false);
+              handleCreateChatBot(e);
+            }}
+            label="Create ChatBot!"
+            size="large"
+          />
         </div>
         <ChatModal
           chatbotName={chatbotName}

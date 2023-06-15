@@ -2,6 +2,7 @@ import Chat from "./Chat";
 import { InputOutputTextPair } from "../models";
 import useChat from "../hooks/useChat";
 import Input from "./Input/Input";
+import { Button } from "./Button/Button";
 
 export type Message = {
   message: string;
@@ -23,11 +24,12 @@ const ChatModal = ({
   modelContext,
   modelExamples,
 }: ChatModalProps) => {
-  const { messages, handleSendMessage, message, setMessage,isLoading } = useChat({
-    chatbotName,
-    modelContext,
-    modelExamples,
-  });
+  const { messages, handleSendMessage, message, setMessage, isLoading } =
+    useChat({
+      chatbotName,
+      modelContext,
+      modelExamples,
+    });
 
   return (
     <div className={`modal ${isOpen ? "open" : ""}`}>
@@ -49,7 +51,11 @@ const ChatModal = ({
             id="message"
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button disabled={isLoading} onClick={handleSendMessage}>Send</button>
+          <Button
+            disabled={isLoading}
+            onClick={handleSendMessage}
+            label="Send"
+          />
         </div>
       </div>
     </div>
