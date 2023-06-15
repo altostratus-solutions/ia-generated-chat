@@ -1,7 +1,10 @@
 import "./styles/App.css";
 import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
-import ChatModal from "./components/ChatModal";
 import { useState } from "react";
+import Input from "./components/Input/Input";
+import { Button } from "./components/Button/Button";
+import Chat from "./components/Chat/Chat";
+import Modal from "./components/Modal/Modal";
 function App() {
   const [isTested, setIsTested] = useState(false);
   const {
@@ -20,9 +23,9 @@ function App() {
       </header>
       <section>
         <form className="form">
-          <label htmlFor="chatbotName">Chatbot Name</label>
-          <input
+          <Input
             value={chatbotName}
+            className="chatbot-name-input"
             onChange={(e) =>
               dispatch({
                 type: ACTIONS.SET_CHATBOT_NAME,
@@ -33,6 +36,8 @@ function App() {
             name="chatbotName"
             id="chatbotName"
             placeholder="My awesome chatbot..."
+            label="Chatbot Name"
+            showLabel={true}
           />
 
           <label htmlFor="chatbotContext">Chatbot Context</label>
@@ -51,8 +56,7 @@ function App() {
           <h2>Example Q&A's</h2>
           <article className="examples-container">
             <div className="examples-inputs-container">
-              <label htmlFor="chatbotExamplesQuestion">Question:</label>
-              <input
+              <Input
                 type="text"
                 name="chatbotExamplesQuestion"
                 id="chatbotExamples"
@@ -64,10 +68,11 @@ function App() {
                     payload: e.target.value,
                   })
                 }
+                label="Question:"
+                showLabel={true}
               />
 
-              <label htmlFor="chatbotExamplesAnswer">Answer:</label>
-              <input
+              <Input
                 type="text"
                 name="chatbotExamplesAnswer"
                 id="chatbotResponse"
@@ -79,10 +84,14 @@ function App() {
                     payload: e.target.value,
                   })
                 }
+                label="Answer:"
+                showLabel={true}
               />
-              <button onClick={handleCreateExampleQuestion}>
-                Load Example
-              </button>
+              <Button
+                label="Add Example"
+                onClick={handleCreateExampleQuestion}
+                size="large"
+              />
             </div>
             <div className="loaded-examples-container">
               <ul className="examples-list">
@@ -90,12 +99,12 @@ function App() {
                 {modelExamples.map((example) => {
                   return (
                     <li className="example" key={example.id}>
-                      <button
+                      <Button
+                        label="&times;"
                         onClick={() => handleDeleteExample(example.id)}
                         className="delete-button"
-                      >
-                        &times;
-                      </button>
+                      />
+
                       <p className="example-text">Q: {example.inputText}</p>
                       <p className="example-text">A: {example.outputText}</p>
                     </li>
@@ -106,34 +115,33 @@ function App() {
           </article>
         </form>
         <div className="buttons-container">
-        <button
-          className="open-modal-button"
-          onClick={() => {
-            setIsTested(true);
-            SetIsOpen((prev) => !prev);
-          }}
-        >
-          Test your Chatbot
-        </button>
-        <button
-          disabled={!isTested}
-          onClick={(e) => {
-            setIsTested(false);
-            handleCreateChatBot(e);
-          }}
-        >
-          Create ChatBot!
-        </button>
+          <Button
+            className="open-modal-button"
+            label="Test your Chatbot"
+            onClick={() => {
+              setIsTested(true);
+              SetIsOpen((prev) => !prev);
+            }}
+            size="large"
+          />
+          <Button
+            disabled={!isTested}
+            onClick={(e) => {
+              setIsTested(false);
+              handleCreateChatBot(e);
+            }}
+            label="Create ChatBot!"
+            size="large"
+          />
         </div>
-        <ChatModal
-          chatbotName={chatbotName}
-          modelContext={modelContext}
-          modelExamples={modelExamples}
-          isOpen={isOpen}
-          onClose={() => {
-            SetIsOpen((prev) => !prev);
-          }}
-        />
+        <Modal isOpen={isOpen} onClose={() => SetIsOpen(false)}>
+          <h2>Test your Bot</h2>
+          <Chat
+            chatbotName={chatbotName}
+            modelContext={modelContext}
+            modelExamples={modelExamples}
+          />
+        </Modal>
       </section>
     </>
   );

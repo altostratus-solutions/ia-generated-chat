@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { Message } from './ChatModal';
-
-const Chat = ({ messages }:{messages:Message[]
-}) => {
+import { useEffect, useRef } from "react";
+export type Message = {
+  message: string;
+  isBot: boolean;
+};
+const ChatMessages = ({ messages }: { messages: Message[] }) => {
   const scrollViewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -13,18 +14,21 @@ const Chat = ({ messages }:{messages:Message[]
     if (scrollViewRef.current) {
       const lastMessage = scrollViewRef.current.lastElementChild;
       if (lastMessage) {
-        lastMessage.scrollIntoView({ behavior: 'smooth' });
+        lastMessage.scrollIntoView({ behavior: "smooth" });
       }
     }
   };
   return (
     <div className="chat" ref={scrollViewRef}>
       {messages.map((message, index) => (
-        <div key={index} className={`message ${message.isBot ? 'isBot' : 'isUser'}`}>
+        <div
+          key={index}
+          className={`message ${message.isBot ? "isBot" : "isUser"}`}
+        >
           {message.message}
         </div>
       ))}
     </div>
   );
 };
-export default Chat;
+export default ChatMessages;
