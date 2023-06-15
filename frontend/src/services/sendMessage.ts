@@ -7,19 +7,23 @@ type TestModelRequestBody = {
   examples: InputOutputTextPair[];
   message: {
     text: string;
-  }};
+  };
+};
 type TestModelResponseBody = {
   text: string;
 };
 
-export async function sendMessage(data:TestModelRequestBody,config:AxiosRequestConfig={}):Promise<TestModelResponseBody> {
-  try {
-    const res :AxiosResponse<TestModelResponseBody> = await axiosInstance.post(TEST_MODEL_API_URL, data,config);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-    return err as TestModelResponseBody;
-  }
-
-
+export function sendMessage(
+  data: TestModelRequestBody,
+  config: AxiosRequestConfig = {}
+) {
+  return axiosInstance
+    .post(TEST_MODEL_API_URL, data, config)
+    .then((response: AxiosResponse<TestModelResponseBody>) => {
+      if (response.status === 200) return response;
+      throw new Error(response.statusText);
+    })
+    .then((response) => {
+      return response.data as TestModelResponseBody;
+    });
 }

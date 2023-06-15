@@ -23,6 +23,7 @@ export default function useChat({
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSendMessage = () => {
+    if (message === "") return;
     setMessage("");
     setMessages([...messages, { message, isBot: false }]);
     const reqBody = {
@@ -37,6 +38,9 @@ export default function useChat({
     sendMessage(reqBody)
       .then((res) => {
         setMessages((prev) => [...prev, { message: res.text, isBot: true }]);
+      })
+      .catch((err) => {
+        console.error(err);
       })
       .finally(() => {
         setIsLoading(false);
