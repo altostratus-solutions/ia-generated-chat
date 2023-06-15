@@ -1,6 +1,7 @@
 import Chat from "./Chat";
 import { InputOutputTextPair } from "../models";
 import useChat from "../hooks/useChat";
+import Input from "./Input/Input";
 
 export type Message = {
   message: string;
@@ -39,11 +40,13 @@ const ChatModal = ({
           <Chat messages={messages} />
         </div>
         <div className="input-container">
-          <input
+          <Input
             className="chat-input"
             type="text"
             placeholder="Type your message..."
             value={message}
+            name="message"
+            id="message"
             onChange={(e) => setMessage(e.target.value)}
           />
           <button disabled={isLoading} onClick={handleSendMessage}>Send</button>

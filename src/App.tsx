@@ -2,6 +2,7 @@ import "./styles/App.css";
 import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
 import ChatModal from "./components/ChatModal";
 import { useState } from "react";
+import Input from "./components/Input/Input";
 function App() {
   const [isTested, setIsTested] = useState(false);
   const {
@@ -20,21 +21,23 @@ function App() {
       </header>
       <section>
         <form className="form">
-          <label htmlFor="chatbotName">Chatbot Name</label>
-          <input
-            value={chatbotName}
-            onChange={(e) =>
-              dispatch({
-                type: ACTIONS.SET_CHATBOT_NAME,
-                payload: e.target.value,
-              })
-            }
-            type="text"
-            name="chatbotName"
-            id="chatbotName"
-            placeholder="My awesome chatbot..."
+          <Input
+          value={chatbotName}
+          className="chatbot-name-input"
+          onChange={(e) =>
+            dispatch({
+              type: ACTIONS.SET_CHATBOT_NAME,
+              payload: e.target.value,
+            })
+          }
+          type="text"
+          name="chatbotName"
+          id="chatbotName"
+          placeholder="My awesome chatbot..."
+          label="Chatbot Name"
+          showLabel={true}
           />
-
+          
           <label htmlFor="chatbotContext">Chatbot Context</label>
           <textarea
             value={modelContext}
@@ -51,35 +54,38 @@ function App() {
           <h2>Example Q&A's</h2>
           <article className="examples-container">
             <div className="examples-inputs-container">
-              <label htmlFor="chatbotExamplesQuestion">Question:</label>
-              <input
-                type="text"
-                name="chatbotExamplesQuestion"
-                id="chatbotExamples"
-                value={currentExample.inputText}
-                placeholder="What is your name?"
-                onChange={(e) =>
-                  dispatch({
-                    type: ACTIONS.SET_CURRENT_EXAMPLE_QUESTION,
-                    payload: e.target.value,
-                  })
-                }
-              />
+              <Input
+               type="text"
+               name="chatbotExamplesQuestion"
+               id="chatbotExamples"
+               value={currentExample.inputText}
+               placeholder="What is your name?"
+               onChange={(e) =>
+                 dispatch({
+                   type: ACTIONS.SET_CURRENT_EXAMPLE_QUESTION,
+                   payload: e.target.value,
+                 })
+               }
+                label="Question:"
+                showLabel={true}
+               
+               />
 
-              <label htmlFor="chatbotExamplesAnswer">Answer:</label>
-              <input
-                type="text"
-                name="chatbotExamplesAnswer"
-                id="chatbotResponse"
-                value={currentExample.outputText}
-                placeholder="My name is..."
-                onChange={(e) =>
-                  dispatch({
-                    type: ACTIONS.SET_CURRENT_EXAMPLE_ANSWER,
-                    payload: e.target.value,
-                  })
-                }
-              />
+               <Input
+                 type="text"
+                 name="chatbotExamplesAnswer"
+                 id="chatbotResponse"
+                 value={currentExample.outputText}
+                 placeholder="My name is..."
+                 onChange={(e) =>
+                   dispatch({
+                     type: ACTIONS.SET_CURRENT_EXAMPLE_ANSWER,
+                     payload: e.target.value,
+                   })
+                 }
+                  label="Answer:"
+                  showLabel={true}
+                />
               <button onClick={handleCreateExampleQuestion}>
                 Load Example
               </button>
