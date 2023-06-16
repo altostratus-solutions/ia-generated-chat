@@ -91,7 +91,7 @@ function App() {
               <Button
                 label="Add Example"
                 onClick={handleCreateExampleQuestion}
-                size="large"
+                size="lg"
               />
             </div>
             <div className="loaded-examples-container">
@@ -123,7 +123,7 @@ function App() {
               setIsTested(true);
               SetIsOpen((prev) => !prev);
             }}
-            size="large"
+            size="lg"
           />
           <Button
             disabled={!isTested}
@@ -132,7 +132,7 @@ function App() {
               handleCreateChatBot(e);
             }}
             label="Create ChatBot!"
-            size="large"
+            size="lg"
           />
         </div>
         <Modal isOpen={isOpen} onClose={() => SetIsOpen(false)}>
