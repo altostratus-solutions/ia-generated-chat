@@ -1,3 +1,4 @@
+import 'minireset.css'
 import "./styles/App.css";
 import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
 import { useState } from "react";
