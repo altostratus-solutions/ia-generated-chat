@@ -37,3 +37,9 @@
   border: var(--border-width-thin) solid var(--color-gray);
   background: var(--background-color-primary-highlight);
 }
+.is-clickable {
+  cursor: pointer;
+}
+.is-dragable {
+  cursor: grab;
+}

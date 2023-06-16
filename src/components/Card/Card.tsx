@@ -1,16 +1,38 @@
-import React from 'react'
+import React from "react";
+export const options = {
+  colors: ["base", "primary", "secondary"] as Array<
+    "base" | "primary" | "secondary"
+  >,
+  sizes: ["sm", "md", "lg"] as Array<"sm" | "md" | "lg">,
+};
 
-type CardProps = {
-  children: React.ReactNode
-  color?: "primary" | "secondary" | "base"
-  size?: "sm" | "md" | "lg"
-}& React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+export type CardProps = {
+  children: React.ReactNode;
+  color?:typeof options.colors[number];
+  size?: typeof options.sizes[number];
+  isDragable?: boolean;
+  isClickable?: boolean;
+} & React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;
 
-function Card({children,color="primary",size="sm",...rest}:CardProps) {
-  const classNames = `card color-${color} size-${size}`
+function Card({
+  children,
+  color = "primary",
+  size = "sm",
+  isDragable = false,
+  isClickable = false,
+  ...rest
+}: CardProps) {
+  const classNames = `card color-${color} size-${size} ${
+    isDragable ? "is-dragable" : ""
+  } ${isClickable ? "is-clickable" : ""}`;
   return (
-    <div className={classNames} {...rest}>{children}</div>
-  )
+    <div className={classNames  } {...rest}>
+      {children}
+    </div>
+  );
 }
 
-export default Card
+export default Card;

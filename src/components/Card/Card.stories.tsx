@@ -1,14 +1,34 @@
-import Card from "./Card"
+import { Meta, StoryFn } from "@storybook/react";
+import Card, { CardProps, options } from "./Card";
 
-export const options = {
-  colors: ['base', 'primary', 'secondary'] as Array<'base' | 'primary' | 'secondary'>,
-  sizes: ['sm', 'md', 'lg'] as Array<'sm' | 'md' | 'lg'>,
-}
 export default {
-  title: 'Components/Card',
+  title: "Components/Card",
   component: Card,
-}
+} as Meta;
 
-export const Default = () => <Card>Default</Card>
-export const Colors = () => options.colors.map((color,index) => <Card color={color} key={index}>Default</Card> ) 
-export const Sizes = () => options.sizes.map((size,index) => <Card size={size} key={index}>Default</Card> )
+const Template: StoryFn<CardProps> = (args) => <Card {...args}>Default</Card>;
+
+export const Default = Template.bind({});
+
+export const Dragable = Template.bind({});
+Dragable.args = {
+  isDragable: true,
+};
+
+export const Clickable = Template.bind({});
+Clickable.args = {
+  isClickable: true,
+};
+
+export const Colors = () =>
+  options.colors.map((color, index) => (
+    <Card color={color} key={index}>
+      Default
+    </Card>
+  ));
+export const Sizes = () =>
+  options.sizes.map((size, index) => (
+    <Card size={size} key={index}>
+      Default
+    </Card>
+  ));
