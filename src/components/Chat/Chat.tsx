@@ -39,6 +39,7 @@ export default function Chat({
             disabled={isLoading}
             onClick={handleSendMessage}
             label="Send"
+            size='md'
           />
         </div>
     </>
