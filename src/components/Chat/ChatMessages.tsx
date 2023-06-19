@@ -1,4 +1,6 @@
 import { useEffect, useRef } from "react";
+import classnames from "../../styles/Chat.module.css"
+
 export type Message = {
   message: string;
   isBot: boolean;
@@ -19,11 +21,11 @@ const ChatMessages = ({ messages }: { messages: Message[] }) => {
     }
   };
   return (
-    <div className="chat" ref={scrollViewRef}>
+    <div className={classnames.chat} ref={scrollViewRef}>
       {messages.map((message, index) => (
         <div
           key={index}
-          className={`message ${message.isBot ? "isBot" : "isUser"}`}
+          className={`${classnames.message} ${message.isBot ? "isBot" : "isUser"}`}
         >
           {message.message}
         </div>
