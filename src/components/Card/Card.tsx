@@ -1,6 +1,6 @@
 import React from "react";
-
-import classnames from "../../styles/Card.module.css";
+import classNames from "classnames";
+import classes from "../../styles/Card.module.css";
 export const options = {
   colors: ["base", "primary", "secondary"] as Array<
     "base" | "primary" | "secondary"
@@ -10,8 +10,8 @@ export const options = {
 
 export type CardProps = {
   children: React.ReactNode;
-  color?:typeof options.colors[number];
-  size?: typeof options.sizes[number];
+  color?: (typeof options.colors)[number];
+  size?: (typeof options.sizes)[number];
   isDragable?: boolean;
   isClickable?: boolean;
 } & React.DetailedHTMLProps<
@@ -25,13 +25,23 @@ function Card({
   size = "sm",
   isDragable = false,
   isClickable = false,
+  className,
   ...rest
 }: CardProps) {
-  const classNames = `${classnames.card} color-${color} size-${size} ${
-    isDragable ? "is-dragable" : ""
-  } ${isClickable ? "is-clickable" : ""}`;
   return (
-    <div className={classNames  } {...rest}>
+    <div
+      className={classNames(
+        classes.card,
+        {
+          [classes[`color-${color}`]]: color,
+          [classes[`size-${size}`]]: size,
+          [classes[`is-dragable`]]: isDragable,
+          [classes[`is-clickable`]]: isClickable,
+        },
+        className
+      )}
+      {...rest}
+    >
       {children}
     </div>
   );
