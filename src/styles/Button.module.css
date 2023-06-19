@@ -7,19 +7,37 @@
   display: inline-block;
   line-height: 1;
 }
-.button--small {
+
+.size-sm {
   font-size: 12px;
   padding: 10px 16px;
 }
-.button--medium {
+
+.size-md {
   font-size: 14px;
   padding: 11px 20px;
 }
-.button--large {
+
+.size-lg {
   font-size: 16px;
   padding: 12px 24px;
 }
 
+.color-primary {
+  background: var(--color-primary) !important;
+  color: var(--color-primary-inverted) !important;
+}
+
+.color-secondary {
+  background: var(--color-secondary);
+  color: var(--color-secondary-inverted);
+}
+
+.color-base {
+  border: var(--border-width-thin) solid var(--color-gray);
+  background: var(--color-base);
+}
+#161F27
 .button__icon {
   position: relative;
   top: 1px;
