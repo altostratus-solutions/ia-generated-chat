@@ -1,4 +1,4 @@
-import '../../styles/Modal.css'
+import classnames from '../../styles/Modal.module.css'
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -11,9 +11,9 @@ function Modal({
   children
 }: ModalProps) {
   return (
-    <div className={`modal ${isOpen ? "open" : ""}`}>
-      <div className="modal-content">
-        <span className="close" onClick={onClose}>
+    <div className={`${classnames.modal} ${isOpen ? classnames.open: ""}`}>
+      <div className={classnames['modal-content']}>
+        <span className={classnames.close} onClick={onClose}>
           &times;
         </span>
         {children}

@@ -3,6 +3,7 @@ import Input from '../Input/Input'
 import { Button } from '../Button/Button'
 import useChat from '../../hooks/useChat';
 import { InputOutputTextPair } from '../../models';
+import classnames from "../../styles/Chat.module.css"
 type ChatProps = {
   chatbotName: string;
   modelContext: string;
@@ -21,12 +22,12 @@ export default function Chat({
     });
   return (
     <>
-    <div className="chat-container">
+    <div className={classnames['chat-container']}>
           <ChatMessages messages={messages} />
         </div>
-        <div className="input-container">
+        <div className={classnames['input-container']}>
           <Input
-            className="chat-input"
+            className={classnames['chat-input']}
             type="text"
             placeholder="Type your message..."
             value={message}

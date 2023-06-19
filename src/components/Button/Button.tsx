@@ -1,21 +1,32 @@
-import "../../styles/Button.css";
+import classes from "../../styles/Button.module.css";
+
+export const options = {
+  colors: ["base", "primary", "secondary"] as Array<
+    "base" | "primary" | "secondary"
+  >,
+  sizes: ["sm", "md", "lg"] as Array<"sm" | "md" | "lg">,
+};
+
 type ButtonProps = {
-  size?: "small" | "medium" | "large";
+  size?: typeof options.sizes[number];
   label: string;
+  color?: typeof options.colors[number];
   icon?: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = ({
-  size = "medium",
+  size = "sm",
   label,
   className,
+  color = "base",
   icon,
   ...rest
   
 }: ButtonProps) => {
+  const classNames = `${classes.button} color-${color} size-${size}`;
   return (
     <button
-      className={["button", `button--${size}`, className].join(" ")}
+      className={classNames}
       {...rest}
     >
       {icon && <span className="button__icon">{icon}</span>}
