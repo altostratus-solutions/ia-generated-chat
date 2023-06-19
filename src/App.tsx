@@ -1,5 +1,4 @@
-import 'minireset.css'
-import "./styles/App.css";
+import classes from "./styles/App.module.css";
 import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
 import { useState } from "react";
 import Input from "./components/Input/Input";
@@ -23,10 +22,9 @@ function App() {
         <h1>Customize your chatbot</h1>
       </header>
       <section>
-        <form className="form">
+        <form className="">
           <Input
             value={chatbotName}
-            className="chatbot-name-input"
             onChange={(e) =>
               dispatch({
                 type: ACTIONS.SET_CHATBOT_NAME,
@@ -55,8 +53,8 @@ function App() {
             placeholder="Pretend you are an astronaut..."
           />
           <h2>Example Q&A's</h2>
-          <article className="examples-container">
-            <div className="examples-inputs-container">
+          <article className={classes['examples-container']}>
+            <div className={classes['examples-inputs-container']}>
               <Input
                 type="text"
                 name="chatbotExamplesQuestion"
@@ -92,22 +90,23 @@ function App() {
                 label="Add Example"
                 onClick={handleCreateExampleQuestion}
                 size="lg"
+                color='base'
               />
             </div>
-            <div className="loaded-examples-container">
-              <ul className="examples-list">
+            <div className={classes['loaded-examples-container']}>
+              <ul className={classes['examples-list']}>
                 <h3>Loaded Examples</h3>
                 {modelExamples.map((example) => {
                   return (
-                    <li className="example" key={example.id}>
+                    <li className={classes.example} key={example.id}>
                       <Button
                         label="&times;"
                         onClick={() => handleDeleteExample(example.id)}
-                        className="delete-button"
+                        className={classes['delete-button']}
                       />
 
-                      <p className="example-text">Q: {example.inputText}</p>
-                      <p className="example-text">A: {example.outputText}</p>
+                      <p className={classes['example-text']}>Q: {example.inputText}</p>
+                      <p className={classes['example-text']}>A: {example.outputText}</p>
                     </li>
                   );
                 })}
@@ -115,15 +114,15 @@ function App() {
             </div>
           </article>
         </form>
-        <div className="buttons-container">
+        <div className={classes['buttons-container']}>
           <Button
-            className="open-modal-button"
             label="Test your Chatbot"
             onClick={() => {
               setIsTested(true);
               SetIsOpen((prev) => !prev);
             }}
             size="lg"
+            color='primary'
           />
           <Button
             disabled={!isTested}
@@ -133,6 +132,7 @@ function App() {
             }}
             label="Create ChatBot!"
             size="lg"
+            color="secondary"
           />
         </div>
         <Modal isOpen={isOpen} onClose={() => SetIsOpen(false)}>
