@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
-import classnames from "../../styles/Chat.module.css"
+import classnames from "../../styles/Chat.module.css";
+import classNames from "classnames";
 
 export type Message = {
   message: string;
@@ -25,7 +26,10 @@ const ChatMessages = ({ messages }: { messages: Message[] }) => {
       {messages.map((message, index) => (
         <div
           key={index}
-          className={`${classnames.message} ${message.isBot ? "isBot" : "isUser"}`}
+          className={classNames(classnames.message, {
+            [classnames.isBot]: message.isBot,
+            [classnames.isUser]: !message.isBot,
+          })}
         >
           {message.message}
         </div>
