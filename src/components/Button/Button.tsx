@@ -1,4 +1,4 @@
-import "../../styles/Button.css";
+import classes from "../../styles/Button.module.css";
 
 export const options = {
   colors: ["base", "primary", "secondary"] as Array<
@@ -23,7 +23,7 @@ export const Button = ({
   ...rest
   
 }: ButtonProps) => {
-  const classNames = `button color-${color} size-${size}`;
+  const classNames = `${classes.button} color-${color} size-${size}`;
   return (
     <button
       className={classNames}
