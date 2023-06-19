@@ -1,10 +1,13 @@
-import classes from "./styles/App.module.css";
+import examplesStyles from "./styles/Example.module.css";
+import AppStyles from "./styles/App.module.css";
+
 import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
 import { useState } from "react";
 import Input from "./components/Input/Input";
 import { Button } from "./components/Button/Button";
 import Chat from "./components/Chat/Chat";
 import Modal from "./components/Modal/Modal";
+import ExamplesList from "./components/Examples/ExamplesList";
 function App() {
   const [isTested, setIsTested] = useState(false);
   const {
@@ -53,8 +56,8 @@ function App() {
             placeholder="Pretend you are an astronaut..."
           />
           <h2>Example Q&A's</h2>
-          <article className={classes['examples-container']}>
-            <div className={classes['examples-inputs-container']}>
+          <article className={examplesStyles['examples-container']}>
+            <div className={examplesStyles['examples-inputs-container']}>
               <Input
                 type="text"
                 name="chatbotExamplesQuestion"
@@ -93,28 +96,13 @@ function App() {
                 color='base'
               />
             </div>
-            <div className={classes['loaded-examples-container']}>
-              <ul className={classes['examples-list']}>
-                <h3>Loaded Examples</h3>
-                {modelExamples.map((example) => {
-                  return (
-                    <li className={classes.example} key={example.id}>
-                      <Button
-                        label="&times;"
-                        onClick={() => handleDeleteExample(example.id)}
-                        className={classes['delete-button']}
-                      />
-
-                      <p className={classes['example-text']}>Q: {example.inputText}</p>
-                      <p className={classes['example-text']}>A: {example.outputText}</p>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <ExamplesList
+              modelExamples={modelExamples}
+              onDelete={handleDeleteExample}
+            />
           </article>
         </form>
-        <div className={classes['buttons-container']}>
+        <div className={AppStyles['buttons-container']}>
           <Button
             label="Test your Chatbot"
             onClick={() => {
