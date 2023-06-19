@@ -1,5 +1,6 @@
 import { InputHTMLAttributes } from "react";
 import classnames from  '../../styles/Input.module.css';
+import classNames from "classnames";
 export type InputProps = {
   label?: string;
   showLabel?: boolean;
@@ -15,14 +16,17 @@ export default function Input({
   ...rest
 }: InputProps) {
 
-  const inputClass = `${isValid ? '' : classnames['input-invalid']} ${className}`;
 
   return (
     <>
       {showLabel && <label htmlFor={name}>{label}</label>}
       <input
       disabled={disabled}
-      className={inputClass}
+      className={classNames(
+        classnames.input,
+        { [classnames['input-invalid']]: !isValid },
+        className
+      )}
       {...rest}
       />
     </>
