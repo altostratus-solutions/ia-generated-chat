@@ -1,4 +1,6 @@
 import React from "react";
+
+import classnames from "../../styles/Card.module.css";
 export const options = {
   colors: ["base", "primary", "secondary"] as Array<
     "base" | "primary" | "secondary"
@@ -25,7 +27,7 @@ function Card({
   isClickable = false,
   ...rest
 }: CardProps) {
-  const classNames = `card color-${color} size-${size} ${
+  const classNames = `${classnames.card} color-${color} size-${size} ${
     isDragable ? "is-dragable" : ""
   } ${isClickable ? "is-clickable" : ""}`;
   return (
