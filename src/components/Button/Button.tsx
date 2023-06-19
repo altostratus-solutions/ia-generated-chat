@@ -1,5 +1,5 @@
 import classes from "../../styles/Button.module.css";
-
+import classNames from 'classnames';
 export const options = {
   colors: ["base", "primary", "secondary"] as Array<
     "base" | "primary" | "secondary"
@@ -15,21 +15,23 @@ type ButtonProps = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = ({
-  size = "sm",
+  size ,
   label,
   className,
-  color = "base",
+  color,
   icon,
   ...rest
   
 }: ButtonProps) => {
-  const classNames = `${classes.button} color-${color} size-${size}`;
   return (
     <button
-      className={classNames}
+      className={classNames(classes.button, {
+        [classes[`color-${color}`]]: color,
+        [classes[`size-${size}`]]: size,
+      },className)}     
       {...rest}
     >
-      {icon && <span className="button__icon">{icon}</span>}
+      {icon && <span className={classNames(classes.button__icon)}>{icon}</span>}
       {label}
     </button>
   );
