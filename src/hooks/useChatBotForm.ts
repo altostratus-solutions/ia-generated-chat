@@ -87,7 +87,7 @@ function chatBotFormReducer(state: chatBotFormState, action: Action<ACTIONS>) {
 }
 
 function useChatBotForm() {
-  const [state, dispatch] = useReducer(chatBotFormReducer, initialState);
+  const [state, dispatch] = useReducer<(state: chatBotFormState, action: Action<ACTIONS>) => chatBotFormState>(chatBotFormReducer, initialState);
   
   const handleCreateExampleQuestion = (
     e: React.MouseEvent<HTMLButtonElement>
