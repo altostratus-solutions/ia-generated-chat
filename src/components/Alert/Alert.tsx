@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import classes from "../../styles/Alert.module.css";
 import classNames from "classnames";
-type AlertType = "success" | "info" | "warning" | "error";
+
+export const types = ["success", "info", "warning", "error"] as const;
+type AlertType = typeof types[number];
 
 interface AlertProps {
   type: AlertType;
@@ -14,11 +16,12 @@ const Alert: React.FC<AlertProps> = ({
   type,
   message,
   onClose,
-  duration = 3000,
+  duration,
 }) => {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    if(!duration) return;
     const timer = setTimeout(() => {
       handleClose();
     }, duration);
