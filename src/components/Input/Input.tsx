@@ -5,6 +5,7 @@ export type InputProps = {
   label?: string;
   showLabel?: boolean;
   isValid?: boolean;
+  name: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 export default function Input({
   label,
@@ -21,6 +22,7 @@ export default function Input({
     <>
       {showLabel && <label htmlFor={name}>{label}</label>}
       <input
+      name={name}
       disabled={disabled}
       className={classNames(
         classnames.input,
