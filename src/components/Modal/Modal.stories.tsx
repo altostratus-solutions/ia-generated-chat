@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Input from "./Modal";
 import Modal from "./Modal";
 import { useState } from "react";
 import Chat from "../Chat/Chat";
 
 const meta: Meta<typeof Modal> = {
   title: "Components/Modal",
-  component: Input,
+  component: Modal,
 };
 
 type Story = StoryObj<typeof meta>;
