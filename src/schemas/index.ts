@@ -1,4 +1,8 @@
 export { questionSchema, questionsFormSchema } from "./question";
 export type { Question, QuestionsForm } from "./question";
-export { chatBotDocSchema, chatBotFromSchema } from "./chatBot";
-export type { ChatBotDoc, ChatBotForm } from "./chatBot";
+export {
+  chatBotDocSchema,
+  chatBotFormSchema,
+  chatBotDataSchema,
+} from "./chatBot";
+export type { ChatBotDoc, ChatBotForm, ChatBotData } from "./chatBot";
