@@ -1,8 +1,9 @@
 import { addDoc, collection } from "firebase/firestore";
-import {ChatBotForm, chatBotFromSchema } from "../schemas";
+import {ChatBotData, ChatBotForm, chatBotFormSchema } from "../schemas";
 import { CHATBOT_COLLECTION, db } from "../firestore";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 
 function useChatBotForm() {
   const {
@@ -10,15 +11,25 @@ function useChatBotForm() {
     handleSubmit,
     control,
     getValues,
-    formState: { errors },
+    reset,
+    formState: { errors,isSubmitSuccessful },
   } = useForm<ChatBotForm>({
-    resolver: zodResolver(chatBotFromSchema),
+    resolver: zodResolver(chatBotFormSchema),
   });
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({
+        chatbotName: "",
+        modelContext: "",
+      })
+    }
+  }, [isSubmitSuccessful, reset])
   const createChatBot = async ({
     chatbotName,
     modelContext,
     modelExamples,
-  }:ChatBotForm) => {
+  }:ChatBotData) => {
     if (
       chatbotName === "" ||
       modelContext === "" ||
