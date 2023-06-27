@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import ExamplesList from "./ExamplesList";
-import { InputOutputTextPair } from "../../schemas";
+import ExamplesList from "./QuestionsList";
+import { Question } from "../../schemas";
 
 const meta: Meta<typeof ExamplesList> = {
   title: "Components/Examples",
@@ -11,7 +11,7 @@ const meta: Meta<typeof ExamplesList> = {
 type Story = StoryObj<typeof meta>;
 
 const ExamplesListDefault = () => {
-  const [examples, setExamples] = useState<InputOutputTextPair[]>([
+  const [questions, setQuestions] = useState<Question[]>([
     {
       id: "1",
       inputText: "Hello",
@@ -20,7 +20,7 @@ const ExamplesListDefault = () => {
   ]);
   return (
     <>
-      <ExamplesList modelExamples={examples} onDelete={() => setExamples([])} />
+      <ExamplesList questions={questions} onDelete={() => setQuestions([])} />
     </>
   );
 };
