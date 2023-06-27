@@ -1,11 +1,6 @@
+import { options } from "../../constants";
 import classes from "../../styles/Button.module.css";
 import classNames from 'classnames';
-export const options = {
-  colors: ["base", "primary", "secondary"] as Array<
-    "base" | "primary" | "secondary"
-  >,
-  sizes: ["sm", "md", "lg"] as Array<"sm" | "md" | "lg">,
-};
 
 type ButtonProps = {
   size?: typeof options.sizes[number];
@@ -14,7 +9,7 @@ type ButtonProps = {
   icon?: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const Button = ({
+const Button = ({
   size ,
   label,
   className,
@@ -36,3 +31,5 @@ export const Button = ({
     </button>
   );
 };
+
+export default Button;

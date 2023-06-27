@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import ExamplesList from "./ExamplesList";
-import { InputOutputTextPair } from "../../models";
+import { InputOutputTextPair } from "../../schemas";
 
 const meta: Meta<typeof ExamplesList> = {
   title: "Components/Examples",

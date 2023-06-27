@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import Form from "./Form";
-import { Button } from "../Button/Button";
+import Button  from "../Button/Button";
 import Input from "../Input/Input";
 
 const meta: Meta<typeof Form> = {
@@ -24,7 +24,7 @@ export const Base = () => {
         width: "100%",
       }}
     >
-      <Form handleSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Input label="example1" type="text" name="text1" />
         <Input label="example2" type="text" name="text2" />
         <Input label="number example" type="number" name="number2" />
@@ -51,7 +51,7 @@ export const WithOtherControls = () => {
         width: "100%",
       }}
     >
-      <Form handleSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <textarea name="textarea" id="123"></textarea>
         <select name="select" id="123">
           <option value="1">1</option>

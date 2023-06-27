@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
-import Card, { CardProps, options } from "./Card";
+import Card, { CardProps } from "./Card";
+import { options } from "../../constants";
 
 export default {
   title: "Components/Card",
