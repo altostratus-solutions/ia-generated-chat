@@ -7,7 +7,7 @@ import Input from "./components/Input/Input";
 import Button from "./components/Button/Button";
 import Chat from "./components/Chat/Chat";
 import Modal from "./components/Modal/Modal";
-import ExamplesList from "./components/Examples/ExamplesList";
+import ExamplesList from "./components/Questions/QuestionsList";
 import Form from "./components/Form/Form";
 
 import useQuestions from "./hooks/useQuestions";
