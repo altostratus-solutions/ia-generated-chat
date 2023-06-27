@@ -1,12 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import classes from "../../styles/Card.module.css";
-export const options = {
-  colors: ["base", "primary", "secondary"] as Array<
-    "base" | "primary" | "secondary"
-  >,
-  sizes: ["sm", "md", "lg"] as Array<"sm" | "md" | "lg">,
-};
+import { options } from "../../constants";
 
 export type CardProps = {
   children: React.ReactNode;

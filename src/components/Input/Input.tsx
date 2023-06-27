@@ -1,36 +1,43 @@
-import { InputHTMLAttributes } from "react";
-import classnames from  '../../styles/Input.module.css';
+import { InputHTMLAttributes, forwardRef } from "react";
+import classnames from "../../styles/Input.module.css";
 import classNames from "classnames";
 export type InputProps = {
   label?: string;
   showLabel?: boolean;
   isValid?: boolean;
   name: string;
+  error?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
-export default function Input({
-  label,
-  name,
-  disabled = false,
-  showLabel = true,
-  isValid = true,
-  className,
-  ...rest
-}: InputProps) {
-
-
-  return (
-    <>
-      {showLabel && <label htmlFor={name}>{label}</label>}
-      <input
-      name={name}
-      disabled={disabled}
-      className={classNames(
-        classnames.input,
-        { [classnames['input-invalid']]: !isValid },
-        className
-      )}
-      {...rest}
-      />
-    </>
-  );
-}
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      label,
+      name,
+      disabled = false,
+      showLabel = true,
+      error,
+      className,
+      ...rest
+    },
+    ref
+  ) => {
+    return (
+      <>
+        {showLabel && <label htmlFor={name}>{label}</label>}
+        <input
+          ref={ref}
+          name={name}
+          disabled={disabled}
+          className={classNames(
+            classnames.input,
+            { [classnames["input-invalid"]]: error },
+            className
+          )}
+          {...rest}
+        />
+        {error && <p className={classnames['input-error']}>{error}</p>}
+      </>
+    );
+  }
+);
+export default Input;

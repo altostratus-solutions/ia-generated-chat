@@ -1,13 +1,13 @@
 import ChatMessages from './ChatMessages'
 import Input from '../Input/Input'
-import { Button } from '../Button/Button'
+import  Button  from '../Button/Button'
 import useChat from '../../hooks/useChat';
-import { InputOutputTextPair } from '../../models';
+import { Question } from '../../schemas';
 import classnames from "../../styles/Chat.module.css"
 type ChatProps = {
   chatbotName: string;
   modelContext: string;
-  modelExamples: InputOutputTextPair[];
+  modelExamples: Question[];
 };
 export default function Chat({
   chatbotName,

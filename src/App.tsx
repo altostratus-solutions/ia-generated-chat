@@ -1,107 +1,99 @@
 import examplesStyles from "./styles/Example.module.css";
 import AppStyles from "./styles/App.module.css";
-
-import useChatBotForm, { ACTIONS } from "./hooks/useChatBotForm";
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
+
 import Input from "./components/Input/Input";
-import { Button } from "./components/Button/Button";
+import Button from "./components/Button/Button";
 import Chat from "./components/Chat/Chat";
 import Modal from "./components/Modal/Modal";
-import ExamplesList from "./components/Examples/ExamplesList";
+import ExamplesList from "./components/Questions/QuestionsList";
 import Form from "./components/Form/Form";
+
+import useQuestions from "./hooks/useQuestions";
+import useChatBotForm from "./hooks/useChatBotForm";
+import TextArea from "./components/TextArea/TextArea";
+
 function App() {
   const [isTested, setIsTested] = useState(false);
+  const [isOpen, SetIsOpen] = useState(false);
+
   const {
-    state: { chatbotName, modelContext, modelExamples, currentExample },
-    dispatch,
-    handleCreateChatBot,
-    handleCreateExampleQuestion,
-    handleDeleteExample,
+    registerChatBotInput,
+    handleSubmitChatBot,
+    chatBotFormErrors,
+    chatBotFormControl,
+    getChatBotFormValues,
+    createChatBot,
   } = useChatBotForm();
 
-  const [isOpen, SetIsOpen] = useState(false);
+  const {
+    questions,
+    createQuestion,
+    deleteQuestion,
+    cleanQuestions,
+    registerQuestionInput,
+    handleSubmitQuestion,
+    questionsFormErrors,
+  } = useQuestions();
   return (
     <>
       <header>
         <h1>Customize your chatbot</h1>
       </header>
       <section>
-        <Form>
+        <Form
+          id="chatbot-form"
+          onSubmit={handleSubmitChatBot(async (data) => {
+            await createChatBot({
+              chatbotName: data.chatbotName,
+              modelContext: data.modelContext,
+              modelExamples: questions,
+            }).then(() => cleanQuestions());
+          })}
+        >
           <Input
-            value={chatbotName}
-            onChange={(e) =>
-              dispatch({
-                type: ACTIONS.SET_CHATBOT_NAME,
-                payload: e.target.value,
-              })
-            }
+            {...registerChatBotInput("chatbotName")}
             type="text"
-            name="chatbotName"
-            id="chatbotName"
             placeholder="My awesome chatbot..."
-            label="Chatbot Name"
-            showLabel={true}
+            label="Chatbot Name:"
+            error={chatBotFormErrors.chatbotName?.message}
           />
 
-          <label htmlFor="chatbotContext">Chatbot Context</label>
-          <textarea
-            value={modelContext}
-            onChange={(e) =>
-              dispatch({
-                type: ACTIONS.SET_MODEL_CONTEXT,
-                payload: e.target.value,
-              })
-            }
-            name="chatbotContext"
-            id="chatbotContext"
-            placeholder="Pretend you are an astronaut..."
+          <TextArea
+            label={"Context:"}
+            error={chatBotFormErrors.modelContext?.message}
+            control={chatBotFormControl}
+            name="modelContext"
           />
         </Form>
         <h2>Example Q&A's</h2>
         <article className={examplesStyles["examples-container"]}>
-          <Form className={examplesStyles["examples-inputs-container"]}>
+          <Form
+            onSubmit={handleSubmitQuestion((data) => {
+              createQuestion({ ...data, id: uuidv4() });
+            })}
+            className={examplesStyles["examples-inputs-container"]}
+          >
             <Input
+              {...registerQuestionInput("inputText")}
+              error={questionsFormErrors.inputText?.message}
               type="text"
-              name="chatbotExamplesQuestion"
-              id="chatbotExamples"
-              value={currentExample.inputText}
               placeholder="What is your name?"
-              onChange={(e) =>
-                dispatch({
-                  type: ACTIONS.SET_CURRENT_EXAMPLE_QUESTION,
-                  payload: e.target.value,
-                })
-              }
               label="Question:"
               showLabel={true}
             />
 
             <Input
+              {...registerQuestionInput("outputText")}
+              error={questionsFormErrors.outputText?.message}
               type="text"
-              name="chatbotExamplesAnswer"
-              id="chatbotResponse"
-              value={currentExample.outputText}
               placeholder="My name is..."
-              onChange={(e) =>
-                dispatch({
-                  type: ACTIONS.SET_CURRENT_EXAMPLE_ANSWER,
-                  payload: e.target.value,
-                })
-              }
               label="Answer:"
-              showLabel={true}
             />
-            <Button
-              label="Add Example"
-              onClick={handleCreateExampleQuestion}
-              size="lg"
-              color="base"
-            />
+            <Button label="Add Example" size="lg" color="base" type="submit" />
           </Form>
-          <ExamplesList
-            modelExamples={modelExamples}
-            onDelete={handleDeleteExample}
-          />
+          <ExamplesList questions={questions} onDelete={deleteQuestion} />
         </article>
       </section>
       <div className={AppStyles["buttons-container"]}>
@@ -115,11 +107,8 @@ function App() {
           color="primary"
         />
         <Button
+          form="chatbot-form"
           disabled={!isTested}
-          onClick={(e) => {
-            setIsTested(false);
-            handleCreateChatBot(e).then(() => console.log("Chatbot created"));
-          }}
           label="Create ChatBot!"
           size="lg"
           color="secondary"
@@ -128,9 +117,9 @@ function App() {
       <Modal isOpen={isOpen} onClose={() => SetIsOpen(false)}>
         <h2>Test your Bot</h2>
         <Chat
-          chatbotName={chatbotName}
-          modelContext={modelContext}
-          modelExamples={modelExamples}
+          chatbotName={getChatBotFormValues("chatbotName")}
+          modelContext={getChatBotFormValues("modelContext")}
+          modelExamples={questions}
         />
       </Modal>
     </>

@@ -1,4 +1,4 @@
-import { InputOutputTextPair } from "../models";
+import { InputOutputTextPair } from "../schemas";
 import axiosInstance, { TEST_MODEL_API_URL } from "../api/axios";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 type TestModelRequestBody = {

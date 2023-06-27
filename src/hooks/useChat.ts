@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InputOutputTextPair } from "../models";
+import { Question } from "../schemas";
 import { sendMessage } from "../services/sendMessage";
 export type Message = {
   message: string;
@@ -9,7 +9,7 @@ export type Message = {
 type useChatParams = {
   chatbotName: string;
   modelContext: string;
-  modelExamples: InputOutputTextPair[];
+  modelExamples: Question[];
 };
 
 export default function useChat({
