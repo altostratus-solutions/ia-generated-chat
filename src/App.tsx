@@ -55,8 +55,6 @@ function App() {
           <Input
             {...registerChatBotInput("chatbotName")}
             type="text"
-            name="chatbotName"
-            id="chatbotName"
             placeholder="My awesome chatbot..."
             label="Chatbot Name:"
             error={chatBotFormErrors.chatbotName?.message}
@@ -95,7 +93,7 @@ function App() {
             />
             <Button label="Add Example" size="lg" color="base" type="submit" />
           </Form>
-          <ExamplesList modelExamples={questions} onDelete={deleteQuestion} />
+          <ExamplesList questions={questions} onDelete={deleteQuestion} />
         </article>
       </section>
       <div className={AppStyles["buttons-container"]}>
