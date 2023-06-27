@@ -128,17 +128,3 @@ function App() {
   );
 }
 export default App;
-
-// <label htmlFor="chatbotContext">Chatbot Context</label>
-// <Controller
-//   name="modelContext"
-//   control={chatBotFormControl}
-//   render={() => (
-//     <textarea
-//       {...registerChatBotInput("modelContext")}
-//       name="modelContext"
-//       id="modelContext"
-//       placeholder="Pretend you are an astronaut..."
-//     />
-//   )}
-// />
