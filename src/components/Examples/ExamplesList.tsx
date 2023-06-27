@@ -1,4 +1,4 @@
-import { InputOutputTextPair } from "../../models";
+import { InputOutputTextPair } from "../../schemas";
 import classes from "../../styles/Example.module.css";
 import Example from "./Example";
 type ExamplesListProps = {

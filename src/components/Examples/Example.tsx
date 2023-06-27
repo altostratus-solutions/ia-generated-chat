@@ -1,8 +1,8 @@
-import { InputOutputTextPair } from "../../models";
-import { Button } from "../Button/Button";
+import {Question}  from "../../schemas";
+import Button  from "../Button/Button";
 import classes from "../../styles/Example.module.css";
 type ExampleProps = {
-  example: InputOutputTextPair;
+  example: Question;
   onDelete: (id: string) => void;
 };
 function Example({ example, onDelete }: ExampleProps) {
