@@ -1,9 +1,9 @@
 import { useReducer } from "react";
-import { chatBotFormState } from "../models";
+import { ChatBotFormState } from "../models";
 import { addDoc, collection } from "firebase/firestore";
 import { CHATBOT_COLLECTION, db } from "../firestore";
 import { v4 as uuidv4 } from "uuid";
-const initialState: chatBotFormState = {
+const initialState: ChatBotFormState = {
   chatbotName: "",
   modelContext: "",
   modelExamples: [],
@@ -24,7 +24,7 @@ export enum ACTIONS {
   SEND_FORM = "SEND_FORM",
 }
 
-function chatBotFormReducer(state: chatBotFormState, action: Action<ACTIONS>) {
+function chatBotFormReducer(state: ChatBotFormState, action: Action<ACTIONS>) {
   switch (action.type) {
     case ACTIONS.SET_CURRENT_EXAMPLE_QUESTION: {
       return {
@@ -92,7 +92,7 @@ function chatBotFormReducer(state: chatBotFormState, action: Action<ACTIONS>) {
 
 function useChatBotForm() {
   const [state, dispatch] = useReducer<
-    (state: chatBotFormState, action: Action<ACTIONS>) => chatBotFormState
+    (state: ChatBotFormState, action: Action<ACTIONS>) => ChatBotFormState
   >(chatBotFormReducer, initialState);
 
   const handleCreateExampleQuestion = (

@@ -11,7 +11,7 @@ export type ChatBotDoc = {
   modelExamples: InputOutputTextPair[];
 }
 
-export type chatBotFormState = {
+export type ChatBotFormState = {
   chatbotName: string;
   modelContext: string;
   modelExamples: InputOutputTextPair[];
