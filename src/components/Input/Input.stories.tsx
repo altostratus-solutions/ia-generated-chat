@@ -23,7 +23,7 @@ export const Invalid:Story = {
     name: 'inputName',
     placeholder: 'Enter a value',
     disabled: false,
-    isValid: false,
+    error: "theres been an error!",
   },
 }
 
