@@ -1,10 +1,10 @@
-import { InputOutputTextPair } from "../schemas";
+import { Question } from "../schemas";
 import axiosInstance, { TEST_MODEL_API_URL } from "../api/axios";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 type TestModelRequestBody = {
   context: string;
   chatbotName: string;
-  examples: InputOutputTextPair[];
+  examples: Question[];
   message: {
     text: string;
   };
