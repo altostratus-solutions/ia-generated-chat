@@ -9,7 +9,7 @@ function ExamplesList({ questions, onDelete }: ExamplesListProps) {
   return (
     <div className={classes["loaded-examples-container"]}>
       <ul className={classes["examples-list"]}>
-        <h3>Loaded Examples</h3>
+        <h3>Loaded Q&A's</h3>
         {questions.map((question) => (
           <Example key={question.id} example={question} onDelete={onDelete} />
         ))}
