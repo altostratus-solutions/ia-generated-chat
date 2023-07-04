@@ -15,7 +15,6 @@ import useChatBotForm from "./hooks/useChatBotForm";
 import TextArea from "./components/TextArea/TextArea";
 
 function App() {
-  const [isTested, setIsTested] = useState(false);
   const [isOpen, SetIsOpen] = useState(false);
 
   const {
@@ -49,7 +48,9 @@ function App() {
               chatbotName: data.chatbotName,
               modelContext: data.modelContext,
               modelExamples: questions,
-            }).then(() => cleanQuestions());
+            })
+              .then(() => cleanQuestions())
+              .then(() => SetIsOpen(true));
           })}
         >
           <Input
@@ -67,7 +68,7 @@ function App() {
             name="modelContext"
           />
         </Form>
-        <h2>Example Q&A's</h2>
+        <h2>Load your Q&A's</h2>
         <article className={examplesStyles["examples-container"]}>
           <Form
             onSubmit={handleSubmitQuestion((data) => {
@@ -93,14 +94,15 @@ function App() {
             />
             <Button label="Add Example" size="lg" color="base" type="submit" />
           </Form>
-          <ExamplesList questions={questions} onDelete={deleteQuestion} />
+          {questions.length > 0 && (
+            <ExamplesList questions={questions} onDelete={deleteQuestion} />
+          )}
         </article>
       </section>
       <div className={AppStyles["buttons-container"]}>
         <Button
           label="Test your Chatbot"
           onClick={() => {
-            setIsTested(true);
             SetIsOpen((prev) => !prev);
           }}
           size="lg"
@@ -108,14 +110,13 @@ function App() {
         />
         <Button
           form="chatbot-form"
-          disabled={!isTested}
           label="Create ChatBot!"
           size="lg"
           color="secondary"
         />
       </div>
       <Modal isOpen={isOpen} onClose={() => SetIsOpen(false)}>
-        <h2>Test your Bot</h2>
+        <h2>Test your ChatBot</h2>
         <Chat
           chatbotName={getChatBotFormValues("chatbotName")}
           modelContext={getChatBotFormValues("modelContext")}
